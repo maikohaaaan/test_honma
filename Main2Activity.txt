@@ -4,5 +4,19 @@ public class Main2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
+        ImageView imageView3 = findViewById(R.id.image_view_3);
+
+        AssetManager assets = getResources().getAssets();
+
+        // try-with-resources
+        try (InputStream istream = assets.open("eyes.png")){
+            Bitmap bitmap = BitmapFactory.decodeStream(istream);
+            imageView3.setImageBitmap(bitmap);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 }

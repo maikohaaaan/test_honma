@@ -1,0 +1,32 @@
+public class MainActivity extends AppCompatActivity {
+    private int mTransitionCount;   // 遷移した回数
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Intent を取得する
+        Intent intent = getIntent();
+        // キーを元にデータを取得する(データがない場合、第２引数の 0 が返る)
+        mTransitionCount = intent.getIntExtra("TransitionCount", 0);
+        // 遷移した回数を +1 する
+        mTransitionCount++;
+        // 遷移した回数を Toast で表示する
+        Toast toast = Toast.makeText(this, String.format("遷移した回数：%d", mTransitionCount), Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.TOP, 0, 150);
+        toast.show();
+
+        Button sendButton = findViewById(R.id.send_button);
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplication(), Main2Activity.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+
+}

@@ -6,13 +6,19 @@ public class Main2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
 
         ImageView imageView3 = findViewById(R.id.image_view_3);
-
+        ImageView imageView2 = findViewById(R.id.image_view_2);
         AssetManager assets = getResources().getAssets();
 
         // try-with-resources
         try (InputStream istream = assets.open("eyes.png")){
             Bitmap bitmap = BitmapFactory.decodeStream(istream);
             imageView3.setImageBitmap(bitmap);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try (InputStream istream = assets.open("mouth.png")){
+            Bitmap bitmap = BitmapFactory.decodeStream(istream);
+            imageView2.setImageBitmap(bitmap);
         } catch (Exception e) {
             e.printStackTrace();
         }

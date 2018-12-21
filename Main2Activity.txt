@@ -1,4 +1,6 @@
 public class Main2Activity extends AppCompatActivity {
+    private int mTransitionCount;   // 遷移した回数
+    private int Eyes;   // パラメータ
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -6,17 +8,59 @@ public class Main2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
 
         ImageView imageView3 = findViewById(R.id.image_view_3);
-
+        ImageView imageView2 = findViewById(R.id.image_view_2);
         AssetManager assets = getResources().getAssets();
 
+        // Intent を取得する
+        Intent intent = getIntent();
+        // キーを元にデータを取得する(データがない場合、第２引数の 0 が返る)
+        mTransitionCount = intent.getIntExtra("TransitionCount", 0);
+        Eyes = intent.getIntExtra("Eyes", 0);
+        // 遷移した回数を +1 する
+        mTransitionCount++;
+        Eyes++;
+        String str = "eyes.png";
+
+        // 遷移した回数を Toast で表示する
+        Toast toast = Toast.makeText(this, String.format("遷移した回数：%d", mTransitionCount), Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.TOP, 0, 150);
+        toast.show();
+        // Eyesの数字表示する
+        Toast toast2 = Toast.makeText(this, String.format("Eyes：%d", Eyes), Toast.LENGTH_LONG);
+        toast2.setGravity(Gravity.TOP, 0, 300);
+        toast2.show();
+
         // try-with-resources
-        try (InputStream istream = assets.open("eyes.png")){
+        if (Eyes > 1 ){
+        try (InputStream istream = assets.open(str)){
             Bitmap bitmap = BitmapFactory.decodeStream(istream);
             imageView3.setImageBitmap(bitmap);
         } catch (Exception e) {
             e.printStackTrace();
+        }}
+
+        try (InputStream istream = assets.open("mouth.pn")){
+            Bitmap bitmap = BitmapFactory.decodeStream(istream);
+            imageView2.setImageBitmap(bitmap);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-
     }
+
+    //意味ないけど残しておくか
+    public void onClick(View view){
+        switch (view.getId()){
+            case R.id.button2:
+                // Intent のインスタンスを取得する
+                Intent intent = new Intent(this, MainActivity.class);
+                // 渡したいデータとキーを指定する
+                intent.putExtra("TransitionCount", mTransitionCount);
+                // 遷移先の画面を呼び出す
+                startActivity(intent);
+                break;
+        }
+    }
+
+
 }
